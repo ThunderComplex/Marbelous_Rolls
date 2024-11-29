@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public float rotSpeed;
     public Camera playerCamera;
     private Rigidbody _rigidbody;
-    private Vector2 speed;
+    private Vector3 speed;
     private Controls controls;
 
     void Awake()
@@ -33,14 +33,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         var move = controls.Player.Move.ReadValue<Vector2>();
-        var ee = playerCamera.transform.rotation.eulerAngles;
-        ee.x = 0f;
-        var q = Quaternion.Euler(ee);
-        speed = q * move * rotSpeed * -1;
+        var move3d = new Vector3(move.x, 0, move.y);
+        var moveAngles = playerCamera.transform.rotation.eulerAngles;
+        // Ignore vertical camera rotation
+        moveAngles.x = 0f;
+        var q = Quaternion.Euler(moveAngles);
+        speed = q * move3d * rotSpeed;
     }
 
     void FixedUpdate()
     {
-        _rigidbody.AddTorque(speed * Time.fixedDeltaTime);
+        var timesteppedSpeed = speed * Time.fixedDeltaTime;
+        _rigidbody.AddTorque(
+            new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -1),
+            ForceMode.Acceleration
+        );
     }
 }
