@@ -19,8 +19,11 @@ public class IngameLeaderboard : MonoBehaviour
 
     [SerializeField] private Button level1Button;
 
+    private bool skipFirstSound;
+
     private void OnEnable()
     {
+        skipFirstSound = true;
         level1Button.onClick.Invoke();
     }
     public void LeaderboardUpdate(int ID)
@@ -28,6 +31,13 @@ public class IngameLeaderboard : MonoBehaviour
         levelID = ID;
         StartCoroutine(IngameLeaderboardUpdate());
         StartCoroutine(PersonalHighscore());
+
+        if (skipFirstSound == true)
+        {
+            skipFirstSound = false;
+            return;
+        }
+        else AudioController.instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
     }
     public void SetLevelIndex(int index)
     {
@@ -105,6 +115,7 @@ public class IngameLeaderboard : MonoBehaviour
     }
     public void StartGame()
     {
+        AudioController.instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
         SceneManager.LoadScene(levelIndex);
     }
 }
