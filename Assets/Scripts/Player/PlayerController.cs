@@ -3,11 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float rotSpeed;
+    public float rotationSpeed;
+    public float jumpForce;
     public Camera playerCamera;
     private Rigidbody _rigidbody;
     private Vector3 speed;
     private Controls controls;
+    private bool performJump;
+    private bool isGrounded;
 
     void Awake()
     {
@@ -38,7 +41,14 @@ public class PlayerController : MonoBehaviour
         // Ignore vertical camera rotation
         moveAngles.x = 0f;
         var q = Quaternion.Euler(moveAngles);
-        speed = q * move3d * rotSpeed;
+        speed = q * move3d * rotationSpeed;
+
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
+
+        if (isGrounded && controls.Player.Jump.WasPerformedThisFrame())
+        {
+            performJump = true;
+        }
     }
 
     void FixedUpdate()
@@ -48,5 +58,12 @@ public class PlayerController : MonoBehaviour
             new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -1),
             ForceMode.Acceleration
         );
+
+        if (performJump && isGrounded)
+        {
+            _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            performJump = false;
+            isGrounded = false;
+        }
     }
 }

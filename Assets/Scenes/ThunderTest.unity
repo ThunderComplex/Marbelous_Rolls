@@ -968,9 +968,17 @@ PrefabInstance:
       value: PlayerBall
       objectReference: {fileID: 0}
     - target: {fileID: 917354758634918927, guid: 7241666cdf614a04b895ef2fe8387d62, type: 3}
+      propertyPath: jumpForce
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 917354758634918927, guid: 7241666cdf614a04b895ef2fe8387d62, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 1377565436}
+    - target: {fileID: 917354758634918927, guid: 7241666cdf614a04b895ef2fe8387d62, type: 3}
+      propertyPath: rotationSpeed
+      value: 2500
+      objectReference: {fileID: 0}
     - target: {fileID: 3933367044814013018, guid: 7241666cdf614a04b895ef2fe8387d62, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.25
