@@ -128,6 +128,8 @@ public class IngameLeaderboard : MonoBehaviour
     public void StartGame()
     {
         AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
+        Time.timeScale = 1;
+
         SceneManager.LoadScene(levelIndex);
     }
 }

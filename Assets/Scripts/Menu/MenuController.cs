@@ -102,11 +102,15 @@ public class MenuController : MonoBehaviour
     }
     public void RestartGame()
     {
+        AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
+
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void BackToMainMenu()
     {
+        AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
+
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
@@ -130,6 +134,8 @@ public class MenuController : MonoBehaviour
     {
         gameIsPaused = true;
         Time.timeScale = 0;
+
+        AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
     }
     private void EndPause()
     {
@@ -137,6 +143,8 @@ public class MenuController : MonoBehaviour
         Cursor.visible = false;
         gameIsPaused = false;
         Time.timeScale = 1;
+
+        AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
     }
 
     public void OnLevelComplete(float finalTime)
