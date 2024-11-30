@@ -19,6 +19,13 @@ public class PlayerController : MonoBehaviour
     {
         controls = new Controls();
         controls.Enable();
+
+        var debugPlayerStart = GameObject.Find("DebugPlayerStart");
+
+        if (debugPlayerStart != null)
+        {
+            transform.position = debugPlayerStart.transform.position;
+        }
     }
 
     void OnEnable()
