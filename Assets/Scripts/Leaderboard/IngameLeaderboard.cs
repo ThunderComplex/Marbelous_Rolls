@@ -75,7 +75,14 @@ public class IngameLeaderboard : MonoBehaviour
                     {
                         prefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += members[i].player.id;
                     }
-                    prefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = members[i].score.ToString();
+
+                    float time = (float)members[i].score / 100;
+                    int milliseconds = Mathf.FloorToInt(time * 100);
+                    milliseconds = Mathf.FloorToInt(milliseconds % 100);
+                    int seconds = Mathf.FloorToInt(time % 60);
+                    int minutes = Mathf.FloorToInt(time / 60 % 60);
+                    prefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
+                    //prefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = members[i].score.ToString();
                 }
                 done = true;
             }
@@ -97,17 +104,22 @@ public class IngameLeaderboard : MonoBehaviour
             {
                 if(response.score == 0)
                 {
-                    personalHighscoreText.text = "No time yet";
+                    personalHighscoreText.text = "Personal best: ---";
                 }
                 else
                 {
-                    personalHighscoreText.text = "Personal best: " + response.score;
+                    float time = (float)response.score / 100;
+                    int milliseconds = Mathf.FloorToInt(time * 100);
+                    milliseconds = Mathf.FloorToInt(milliseconds % 100);
+                    int seconds = Mathf.FloorToInt(time % 60);
+                    int minutes = Mathf.FloorToInt(time / 60 % 60);
+                    personalHighscoreText.text = "Personal best: " + string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
                 }
                 done = true;
             }
             else
             {
-                personalHighscoreText.text = "No time yet";
+                personalHighscoreText.text = "Personal best: ---";
                 done = true;
             }
         });

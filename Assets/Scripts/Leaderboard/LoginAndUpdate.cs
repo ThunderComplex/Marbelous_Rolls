@@ -4,7 +4,6 @@ using System.Collections;
 
 public class LoginAndUpdate : MonoBehaviour
 {
-    [SerializeField] private int testInt;
     void Start()
     {
         StartCoroutine(LeaderboardLogin());
@@ -29,9 +28,11 @@ public class LoginAndUpdate : MonoBehaviour
         });
         yield return new WaitWhile(() => done == false);
     }
-    public void LeaderboardTest()
+    public void StartLeaderboardUpdate(float score)
     {
-        StartCoroutine(LeaderboardUpdate(testInt));
+        int testscore = Mathf.FloorToInt(score * 100);
+        Debug.Log(testscore);
+        StartCoroutine(LeaderboardUpdate(testscore));
     }
     public IEnumerator LeaderboardUpdate(int score)
     {

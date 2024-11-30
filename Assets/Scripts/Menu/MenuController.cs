@@ -3,23 +3,36 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
+    public static MenuController Instance;
 
-    private bool gameIsPaused;
-    private GameObject currentOpenMenu;
     private Controls controls;
+    private GameObject currentOpenMenu;
+    private bool gameIsPaused;
+    private bool levelIsFinished;
 
     [SerializeField] private GameObject MainMenu;
     [SerializeField] private GameObject IngameMenu;
-    //[SerializeField] private GameObject LevelSelection;
-    //[SerializeField] private GameObject Settings;
-    //[SerializeField] private GameObject Credits;
+    [SerializeField] private GameObject ResultScreen;
+
+    [SerializeField] private GameObject levelSelectionBackButton;
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else Destroy(gameObject);
+
         controls = Keybindinputmanager.inputActions;
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             MainMenu.SetActive(true);
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
 
@@ -33,6 +46,7 @@ public class MenuController : MonoBehaviour
     {
         if (controls.Menu.MenuEsc.WasPerformedThisFrame())
         {
+            if (levelIsFinished) return;
             HandleMenu();
         }
 
@@ -50,6 +64,8 @@ public class MenuController : MonoBehaviour
             {
                 if (gameIsPaused == false)
                 {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
                     PauseGame();
                     IngameMenu.SetActive(true);
                 }
@@ -74,6 +90,7 @@ public class MenuController : MonoBehaviour
 
             MainMenu.SetActive(false);
             IngameMenu.SetActive(false);
+            ResultScreen.SetActive(false);
 
             AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
         }
@@ -116,14 +133,23 @@ public class MenuController : MonoBehaviour
     }
     private void EndPause()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         gameIsPaused = false;
         Time.timeScale = 1;
     }
-    //private void SelectMenu(GameObject menu)
-    //{
-    //    currentOpenMenu = currentMenu;
-    //    LevelSelection.SetActive(menu == LevelSelection);
-    //    Settings.SetActive(menu == Settings);
-    //    Credits.SetActive(menu == Credits);
-    //}
+
+    public void OnLevelComplete(float finalTime)
+    {
+        levelSelectionBackButton.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        gameIsPaused = true;
+        levelIsFinished = true;
+        Time.timeScale = 0;
+
+        ResultScreen.SetActive(true);
+        ResultScreen.GetComponent<ResultScreen>().SetGameoverScreen(finalTime);
+    }
 }
