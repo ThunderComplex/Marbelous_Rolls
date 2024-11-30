@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: c3af81819160e5840a14151e9f96050b
+  - enabled: 1
+    path: Assets/Scenes/Level/Level1.unity
+    guid: c047553197053414a8b0a39acd32e8fd
+  - enabled: 1
+    path: Assets/Scenes/Level/Level2.unity
+    guid: 5cb56c09f69220740be045a96fe914da
+  - enabled: 1
+    path: Assets/Scenes/MarvinTest.unity
+    guid: c57871c5cec193442b366db13a270b43
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
