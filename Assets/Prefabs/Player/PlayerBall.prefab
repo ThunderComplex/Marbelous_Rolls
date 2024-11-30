@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 917354758634918927}
   m_Layer: 0
   m_Name: PlayerBall
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,5 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094a6b912a39570458f7320069eea57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSpeed: 2500
+  rotationSpeed: 2500
+  jumpForce: 550
   playerCamera: {fileID: 0}

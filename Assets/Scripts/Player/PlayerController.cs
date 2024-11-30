@@ -11,11 +11,21 @@ public class PlayerController : MonoBehaviour
     private Controls controls;
     private bool performJump;
     private bool isGrounded;
+    private PowerupType? currentPowerup = null;
+    private bool canDoubleJump = false;
+    private bool canSpeedBoost = false;
 
     void Awake()
     {
         controls = new Controls();
         controls.Enable();
+
+        var debugPlayerStart = GameObject.Find("DebugPlayerStart");
+
+        if (debugPlayerStart != null)
+        {
+            transform.position = debugPlayerStart.transform.position;
+        }
     }
 
     void OnEnable()
@@ -49,6 +59,27 @@ public class PlayerController : MonoBehaviour
         {
             performJump = true;
         }
+
+        if (currentPowerup != null && controls.Player.Switch.WasPerformedThisFrame())
+        {
+            ExecutePowerUp();
+        }
+
+    }
+
+    void ExecutePowerUp()
+    {
+        switch (currentPowerup)
+        {
+            case PowerupType.DoubleJump:
+                canDoubleJump = true;
+                break;
+            case PowerupType.SpeedBoost:
+                canSpeedBoost = true;
+                break;
+        }
+
+        currentPowerup = null;
     }
 
     void FixedUpdate()
@@ -65,5 +96,22 @@ public class PlayerController : MonoBehaviour
             performJump = false;
             isGrounded = false;
         }
+
+        if (canDoubleJump)
+        {
+            _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            canDoubleJump = false;
+        }
+
+        if (canSpeedBoost)
+        {
+            _rigidbody.AddForce(speed * 0.5f, ForceMode.Impulse);
+            canSpeedBoost = false;
+        }
+    }
+
+    public void GivePowerUp(PowerupType powerupType)
+    {
+        currentPowerup = powerupType;
     }
 }
