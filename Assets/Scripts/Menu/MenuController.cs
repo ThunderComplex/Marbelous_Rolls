@@ -33,37 +33,36 @@ public class MenuController : MonoBehaviour
     {
         if (controls.Menu.MenuEsc.WasPerformedThisFrame())
         {
-            if (SceneManager.GetActiveScene().buildIndex == 0)
+            HandleMenu();
+        }
+
+    }
+    public void HandleMenu()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            if (MainMenu.activeSelf == true) return;
+            else CloseSelectedMenu(MainMenu);
+        }
+        else
+        {
+            if (IngameMenu.activeSelf == false)
             {
-                if (MainMenu.activeSelf == true) return;
-                else
+                if (gameIsPaused == false)
                 {
-                    CloseSelectedMenu(MainMenu);
+                    PauseGame();
+                    IngameMenu.SetActive(true);
                 }
+                else CloseSelectedMenu(IngameMenu);
             }
             else
             {
-                if(IngameMenu.activeSelf == false)
-                {
-                    if(gameIsPaused == false)
-                    {
-                        PauseGame();
-                        IngameMenu.SetActive(true);
-                    }
-                    else
-                    {
-                        CloseSelectedMenu(IngameMenu);
-                        IngameMenu.SetActive(true);
-                    }
-                }
-                else
-                {
-                    IngameMenu.SetActive(false);
-                    EndPause();
-                }
+                IngameMenu.SetActive(false);
+                EndPause();
             }
         }
     }
+
     public void OpenSelection(GameObject currentMenu)
     {
         {
