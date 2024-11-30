@@ -43,7 +43,7 @@ public class IngameLeaderboard : MonoBehaviour
     {
         levelIndex = index;
         leaderboardText.text = "Leaderboard\n" + "Level " + index;
-        startGameText.text = "Start Game"; //"Start Level " + index;
+        startGameText.text = "Start Level " + index;
     }
     public IEnumerator IngameLeaderboardUpdate()
     {
