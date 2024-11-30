@@ -37,7 +37,7 @@ public class IngameLeaderboard : MonoBehaviour
             skipFirstSound = false;
             return;
         }
-        else AudioController.instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
+        else AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
     }
     public void SetLevelIndex(int index)
     {
@@ -115,7 +115,7 @@ public class IngameLeaderboard : MonoBehaviour
     }
     public void StartGame()
     {
-        AudioController.instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
+        AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
         SceneManager.LoadScene(levelIndex);
     }
 }

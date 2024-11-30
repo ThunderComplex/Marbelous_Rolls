@@ -85,7 +85,7 @@ public class Audioslider : MonoBehaviour
             skipFirstSound = false;
             return;
         }
-        else AudioController.instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
+        else AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
 
 
     }

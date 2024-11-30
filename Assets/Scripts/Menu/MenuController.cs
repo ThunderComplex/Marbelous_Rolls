@@ -75,7 +75,7 @@ public class MenuController : MonoBehaviour
             MainMenu.SetActive(false);
             IngameMenu.SetActive(false);
 
-            AudioController.instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
+            AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
         }
     }
     public void ResumeGame()
@@ -106,7 +106,7 @@ public class MenuController : MonoBehaviour
             Debug.LogWarning("No previous menu to return to. Going back to inGameMenu.");
             mainMenu.SetActive(true);
         }
-        AudioController.instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
+        AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
     }
 
     private void PauseGame()

@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 
 public class AudioController : MonoBehaviour
 {
-    public static AudioController instance;
+    public static AudioController Instance;
 
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource soundSource;
@@ -28,9 +28,9 @@ public class AudioController : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if(Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
