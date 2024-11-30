@@ -2,19 +2,50 @@ using UnityEngine;
 using LootLocker.Requests;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class IngameLeaderboard : MonoBehaviour
 {
     private int levelID;
+    private int levelIndex;
+
     [SerializeField] private GameObject rankPrefab;
     [SerializeField] private Transform rankPrefabRoot;
+
+    [SerializeField] private TextMeshProUGUI leaderboardText;
+    [SerializeField] private TextMeshProUGUI personalHighscoreText;
+    [SerializeField] private TextMeshProUGUI startGameText;
+
+    [SerializeField] private Button level1Button;
+
+    private void OnEnable()
+    {
+        level1Button.onClick.Invoke();
+    }
     public void LeaderboardUpdate(int ID)
     {
         levelID = ID;
         StartCoroutine(IngameLeaderboardUpdate());
+        StartCoroutine(PersonalHighscore());
+    }
+    public void SetLevelIndex(int index)
+    {
+        levelIndex = index;
+        leaderboardText.text = "Leaderboard\n" + "Level " + index;
+        startGameText.text = "Start Game"; //"Start Level " + index;
     }
     public IEnumerator IngameLeaderboardUpdate()
     {
+        if (rankPrefabRoot.childCount != 0)
+        {
+            for (int i = rankPrefabRoot.childCount - 1; i >= 0; i--)
+            {
+                Destroy(rankPrefabRoot.GetChild(i).gameObject);
+            }
+        }
+
+
         bool done = false;
         LootLockerSDKManager.GetScoreList(levelID.ToString(), 10, (response) =>
         {
@@ -45,5 +76,35 @@ public class IngameLeaderboard : MonoBehaviour
             }
         });
         yield return new WaitWhile(() => done == false);
+    }
+    public IEnumerator PersonalHighscore()
+    {
+        bool done = false;
+        string playerID = PlayerPrefs.GetString("PlayerID");
+        LootLockerSDKManager.GetMemberRank(levelID.ToString(), playerID, (response) =>
+        {
+            if (response.success)
+            {
+                if(response.score == 0)
+                {
+                    personalHighscoreText.text = "No time yet";
+                }
+                else
+                {
+                    personalHighscoreText.text = "Personal best: " + response.score;
+                }
+                done = true;
+            }
+            else
+            {
+                personalHighscoreText.text = "No time yet";
+                done = true;
+            }
+        });
+        yield return new WaitWhile(() => done == false);
+    }
+    public void StartGame()
+    {
+        SceneManager.LoadScene(levelIndex);
     }
 }
