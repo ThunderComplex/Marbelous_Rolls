@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float rotationSpeed;
     public float jumpForce;
+    public float cameraSpeed;
     public Camera playerCamera;
     public CinemachineCamera cinemaCamera;
     private Rigidbody _rigidbody;
@@ -56,7 +57,7 @@ public class PlayerController : MonoBehaviour
         var moveAngles = playerCamera.transform.rotation.eulerAngles;
         // Ignore vertical camera rotation
         moveAngles.x = 0f;
-        steeringVector.y += move.x * 3;
+        steeringVector.y += move.x * 5;
         var q = Quaternion.Euler(steeringVector);
         speed = q * move3d * rotationSpeed;
         // Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
@@ -92,7 +93,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        orbitalFollow.HorizontalAxis.Value = steeringVector.y;
+        orbitalFollow.HorizontalAxis.Value = Mathf.Lerp(
+            orbitalFollow.HorizontalAxis.Value,
+            steeringVector.y,
+            Time.fixedDeltaTime * cameraSpeed
+        );
         orbitalFollow.VerticalAxis.Value = 25;
 
         var timesteppedSpeed = speed * Time.fixedDeltaTime;

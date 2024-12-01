@@ -151,5 +151,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 400
   jumpForce: 550
+  cameraSpeed: 4
   playerCamera: {fileID: 0}
   cinemaCamera: {fileID: 0}
