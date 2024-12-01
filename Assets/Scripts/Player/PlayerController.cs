@@ -175,5 +175,6 @@ public class PlayerController : MonoBehaviour
     {
         currentPowerup = powerupType;
         currentPowerupAmount = amount;
+        PlayerUI.Instance.ActivateCooldownIcon(amount, PlayerUI.Cooldown.boostCD);
     }
 }

@@ -39,7 +39,7 @@ public class PlayerUI : MonoBehaviour
     }
     void Start()
     {
-        if(PlayerController.instance != null) PlayerController.instance.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        if (PlayerController.instance != null) PlayerController.instance.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -63,8 +63,9 @@ public class PlayerUI : MonoBehaviour
         return timerObj.GetComponent<Timer>().time;
     }
 
-    public void ActivateCooldownIcon(int charges)
+    public void ActivateCooldownIcon(int charges, Cooldown _cooldown)
     {
+        cooldown = _cooldown;
         switch (cooldown)
         {
             case Cooldown.boostCD:
@@ -87,14 +88,14 @@ public class PlayerUI : MonoBehaviour
         switch (cooldown)
         {
             case Cooldown.boostCD:
-                StartCD(boostCooldown,cooldownTime, cdBool, charges);
+                StartCD(boostCooldown, cooldownTime, cdBool, charges);
                 break;
             case Cooldown.gravityCD:
                 StartCD(gravityCooldown, cooldownTime, cdBool, charges);
                 break;
         }
     }
-    private void StartCD(Cooldowns cd, float cooldownTime, bool cdBool,  int charges)
+    private void StartCD(Cooldowns cd, float cooldownTime, bool cdBool, int charges)
     {
         if (charges <= 0) cd.gameObject.SetActive(false);
         else StartCoroutine(cd.Cooldown(cooldownTime, cdBool));
