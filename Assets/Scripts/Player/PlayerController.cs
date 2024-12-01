@@ -56,13 +56,10 @@ public class PlayerController : MonoBehaviour
         var moveAngles = playerCamera.transform.rotation.eulerAngles;
         // Ignore vertical camera rotation
         moveAngles.x = 0f;
-        steeringVector.y += move.x * 2;
+        steeringVector.y += move.x * 3;
         var q = Quaternion.Euler(steeringVector);
         speed = q * move3d * rotationSpeed;
-        Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
-
-        orbitalFollow.HorizontalAxis.Value = steeringVector.y;
-        orbitalFollow.VerticalAxis.Value = 25;
+        // Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
 
@@ -95,11 +92,23 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        orbitalFollow.HorizontalAxis.Value = steeringVector.y;
+        orbitalFollow.VerticalAxis.Value = 25;
+
         var timesteppedSpeed = speed * Time.fixedDeltaTime;
-        _rigidbody.AddTorque(
-            new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -4),
-            ForceMode.Acceleration
+        // _rigidbody.AddTorque(
+        //     new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -1),
+        //     ForceMode.Acceleration
+        // );
+        _rigidbody.AddForce(timesteppedSpeed, ForceMode.Acceleration);
+
+        var cameraDiff = Mathf.Abs(
+            Vector3.Dot(_rigidbody.linearVelocity.normalized, playerCamera.transform.forward.normalized)
         );
+        if (cameraDiff < 0.8 && speed.magnitude < 0.1f)
+        {
+            _rigidbody.AddForce(_rigidbody.linearVelocity * -1.5f, ForceMode.Acceleration);
+        }
 
         if (performJump && isGrounded)
         {
