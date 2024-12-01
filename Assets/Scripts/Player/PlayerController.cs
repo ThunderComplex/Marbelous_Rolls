@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         var move = controls.Player.Move.ReadValue<Vector2>();
-        var move3d = new Vector3(move.x, 0, move.y);
+        var move3d = new Vector3(move.x * 2.5f, 0, move.y);
         var moveAngles = playerCamera.transform.rotation.eulerAngles;
         // Ignore vertical camera rotation
         moveAngles.x = 0f;
@@ -107,6 +107,12 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.AddForce(speed * 0.5f, ForceMode.Impulse);
             canSpeedBoost = false;
+        }
+
+        // Air control
+        if (!isGrounded)
+        {
+            _rigidbody.AddForce(timesteppedSpeed * 2);
         }
     }
 
