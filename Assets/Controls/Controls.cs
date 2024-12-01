@@ -73,7 +73,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Port"",
+                    ""name"": ""Reset"",
                     ""type"": ""Button"",
                     ""id"": ""f3c16d99-f9f6-4e8b-8be7-5c3cb84d7979"",
                     ""expectedControlType"": """",
@@ -185,11 +185,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""532c3571-2247-4ed8-907f-0c6c5591d021"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Port"",
+                    ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -233,7 +233,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Switch = m_Player.FindAction("Switch", throwIfNotFound: true);
         m_Player_Gravity = m_Player.FindAction("Gravity", throwIfNotFound: true);
-        m_Player_Port = m_Player.FindAction("Port", throwIfNotFound: true);
+        m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_MenuEsc = m_Menu.FindAction("MenuEsc", throwIfNotFound: true);
@@ -309,7 +309,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Switch;
     private readonly InputAction m_Player_Gravity;
-    private readonly InputAction m_Player_Port;
+    private readonly InputAction m_Player_Reset;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -319,7 +319,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Switch => m_Wrapper.m_Player_Switch;
         public InputAction @Gravity => m_Wrapper.m_Player_Gravity;
-        public InputAction @Port => m_Wrapper.m_Player_Port;
+        public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -344,9 +344,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Gravity.started += instance.OnGravity;
             @Gravity.performed += instance.OnGravity;
             @Gravity.canceled += instance.OnGravity;
-            @Port.started += instance.OnPort;
-            @Port.performed += instance.OnPort;
-            @Port.canceled += instance.OnPort;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -366,9 +366,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Gravity.started -= instance.OnGravity;
             @Gravity.performed -= instance.OnGravity;
             @Gravity.canceled -= instance.OnGravity;
-            @Port.started -= instance.OnPort;
-            @Port.performed -= instance.OnPort;
-            @Port.canceled -= instance.OnPort;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -439,7 +439,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
         void OnGravity(InputAction.CallbackContext context);
-        void OnPort(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

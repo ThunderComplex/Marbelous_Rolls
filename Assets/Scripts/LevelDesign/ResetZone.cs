@@ -23,6 +23,7 @@ public class ResetZone : MonoBehaviour
         yield return new WaitForSeconds(resetTime);
 
         //MenuController.Instance.ControlsDisable();
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

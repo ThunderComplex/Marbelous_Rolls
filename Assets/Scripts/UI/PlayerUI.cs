@@ -1,10 +1,13 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerUI : MonoBehaviour
 {
     public static PlayerUI Instance;
+
+    private Controls controls;
 
     [SerializeField] private PlayerController playerController;
 
@@ -18,6 +21,12 @@ public class PlayerUI : MonoBehaviour
             Instance = this;
         }
         else Destroy(gameObject);
+
+        controls = Keybindinputmanager.inputActions;
+    }
+    private void OnEnable()
+    {
+        controls.Enable();
     }
     void Start()
     {
@@ -26,6 +35,14 @@ public class PlayerUI : MonoBehaviour
         Cursor.visible = false;
 
         countdownObj.SetActive(true);
+    }
+    private void Update()
+    {
+        if (controls.Player.Reset.WasPerformedThisFrame() && MenuController.Instance.gameIsPaused == false)
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
     public void SwitchPlayerRigidbody()
     {
