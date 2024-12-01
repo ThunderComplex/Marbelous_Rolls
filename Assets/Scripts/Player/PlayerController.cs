@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed;
     public float jumpForce;
     public Camera playerCamera;
+    public CinemachineCamera cinemaCamera;
     private Rigidbody _rigidbody;
     private Vector3 speed;
     private Controls controls;
@@ -15,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool canDoubleJump = false;
     private bool canSpeedBoost = false;
     private Vector3 steeringVector = Vector3.zero;
+    private CinemachineOrbitalFollow orbitalFollow;
 
     void Awake()
     {
@@ -43,6 +46,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         TryGetComponent(out _rigidbody);
+        cinemaCamera.TryGetComponent(out orbitalFollow);
     }
 
     void Update()
@@ -56,6 +60,9 @@ public class PlayerController : MonoBehaviour
         var q = Quaternion.Euler(steeringVector);
         speed = q * move3d * rotationSpeed;
         Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
+
+        orbitalFollow.HorizontalAxis.Value = steeringVector.y;
+        orbitalFollow.VerticalAxis.Value = 25;
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
 
