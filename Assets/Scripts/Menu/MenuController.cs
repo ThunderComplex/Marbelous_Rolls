@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MenuController : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class MenuController : MonoBehaviour
 
     private Controls controls;
     private GameObject currentOpenMenu;
-    private bool gameIsPaused;
+    [NonSerialized] public bool gameIsPaused;
     private bool levelIsFinished;
 
     [SerializeField] private GameObject MainMenu;
