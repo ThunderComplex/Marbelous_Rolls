@@ -108,6 +108,12 @@ public class PlayerController : MonoBehaviour
             _rigidbody.AddForce(speed * 0.5f, ForceMode.Impulse);
             canSpeedBoost = false;
         }
+
+        // Air control
+        if (!isGrounded)
+        {
+            _rigidbody.AddForce(timesteppedSpeed * 2);
+        }
     }
 
     public void GivePowerUp(PowerupType powerupType)
