@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     public float rotationSpeed;
     public float jumpForce;
     public float cameraSpeed;
@@ -22,8 +23,16 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        controls = new Controls();
-        controls.Enable();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        controls = Keybindinputmanager.inputActions;
 
         var debugPlayerStart = GameObject.Find("DebugPlayerStart");
 
