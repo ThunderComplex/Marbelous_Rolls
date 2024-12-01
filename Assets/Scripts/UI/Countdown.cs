@@ -4,6 +4,8 @@ using System.Collections;
 
 public class Countdown : MonoBehaviour
 {
+    private float countdownSpeed = 0.6f;
+
     [SerializeField] private TextMeshProUGUI countdownText;
     private void OnEnable()
     {
@@ -17,9 +19,10 @@ public class Countdown : MonoBehaviour
             remainingTime -= 1;
             countdownText.color = Color.red;
             countdownText.text = remainingTime.ToString();
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(countdownSpeed);
         }
         PlayerUI.Instance.timerObj.SetActive(true);
+        PlayerUI.Instance.SwitchPlayerRigidbody();
         countdownText.color = Color.green;
         countdownText.text = "Go!";
         StartCoroutine(CountdownDisable());

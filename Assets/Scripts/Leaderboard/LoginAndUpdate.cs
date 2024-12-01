@@ -16,13 +16,13 @@ public class LoginAndUpdate : MonoBehaviour
         {
             if (response.success)
             {
-                Debug.Log("Player Login success");
+                //Debug.Log("Player Login success");
                 PlayerPrefs.SetString("PlayerID", response.player_id.ToString());
                 done = true;
             }
             else
             {
-                Debug.Log("Player Login failed");
+                //Debug.Log("Player Login failed");
                 done = true;
             }
         });
@@ -42,12 +42,12 @@ public class LoginAndUpdate : MonoBehaviour
         {
             if (responce.success)
             {
-                Debug.Log("Score updated");
+                //Debug.Log("Score updated");
                 done = true;
             }
             else
             {
-                Debug.Log("Score update failed");
+                //Debug.Log("Score update failed");
                 done = true;
             }
         });

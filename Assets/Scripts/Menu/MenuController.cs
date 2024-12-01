@@ -41,6 +41,11 @@ public class MenuController : MonoBehaviour
     {
         controls.Enable();
     }
+    public void ControlsDisable()
+    {
+        controls.Disable();
+        controls.Dispose();
+    }
 
     void Update()
     {

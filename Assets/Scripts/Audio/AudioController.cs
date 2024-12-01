@@ -21,6 +21,7 @@ public class AudioController : MonoBehaviour
     {
         empty,
         menuButton,
+        levelFail,
         jump,
         colorSwitch,
 

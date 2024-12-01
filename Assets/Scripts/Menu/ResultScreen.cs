@@ -23,6 +23,14 @@ public class ResultScreen : MonoBehaviour
     }
     private IEnumerator IngameLeaderboardUpdate()
     {
+        if (rankPrefabRoot.childCount != 0)
+        {
+            for (int i = rankPrefabRoot.childCount - 1; i >= 0; i--)
+            {
+                Destroy(rankPrefabRoot.GetChild(i).gameObject);
+            }
+        }
+
         bool done = false;
         LootLockerSDKManager.GetScoreList(LeaderboardID.currentLeaderboardID.ToString(), 10, (response) =>
         {
@@ -124,7 +132,10 @@ public class ResultScreen : MonoBehaviour
                 }
             });
             MenuController.Instance.GetComponent<LoginAndUpdate>().StartLeaderboardUpdate(newTime);
+            AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton);
             commitedTime = true;
+
+            StartCoroutine(IngameLeaderboardUpdate());
         }
     }
 }
