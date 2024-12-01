@@ -4,24 +4,40 @@ public class SwitchObject : MonoBehaviour
 {
     [SerializeField] private bool activ;
 
-    //[SerializeField] private Collider collider = new Collider();
+    private Collider objCollider;
+    private Material objMaterial;
 
     private Color activColor;
-    private Color DisableColor;
+    private Color inactivColor;
     void Awake()
     {
-        //activColor = 
+        objCollider = GetComponent<Collider>();
+        objMaterial = gameObject.GetComponent<Renderer>().material;
+
+        activColor = objMaterial.color;
+
+        Color transperantColor = activColor;
+        transperantColor.a = 0.4f;
+        inactivColor = transperantColor;
+
+        if (activ == false)
+        {
+            objCollider.isTrigger = true;
+            objMaterial.color = inactivColor;
+        }
     }
 
     public void ChangeColorState()
     {
         if (activ)
         {
-
+            objCollider.isTrigger = true;
+            objMaterial.color = inactivColor;
         }
         else
         {
-
+            objCollider.isTrigger = false;
+            objMaterial.color = activColor;
         }
         activ = !activ;
     }
