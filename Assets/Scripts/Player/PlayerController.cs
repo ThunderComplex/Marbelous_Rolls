@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private PowerupType? currentPowerup = null;
     private bool canDoubleJump = false;
     private bool canSpeedBoost = false;
+    private Vector3 steeringVector = Vector3.zero;
 
     void Awake()
     {
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = debugPlayerStart.transform.position;
         }
+
     }
 
     void OnEnable()
@@ -46,12 +48,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         var move = controls.Player.Move.ReadValue<Vector2>();
-        var move3d = new Vector3(move.x * 2.5f, 0, move.y);
+        var move3d = new Vector3(0, 0, move.y);
         var moveAngles = playerCamera.transform.rotation.eulerAngles;
         // Ignore vertical camera rotation
         moveAngles.x = 0f;
-        var q = Quaternion.Euler(moveAngles);
+        steeringVector.y += move.x * 2;
+        var q = Quaternion.Euler(steeringVector);
         speed = q * move3d * rotationSpeed;
+        Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
 
@@ -86,7 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         var timesteppedSpeed = speed * Time.fixedDeltaTime;
         _rigidbody.AddTorque(
-            new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -1),
+            new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -4),
             ForceMode.Acceleration
         );
 
