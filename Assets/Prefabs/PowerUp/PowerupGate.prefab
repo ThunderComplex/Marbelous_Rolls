@@ -323,6 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerupType: 1
+  amount: 1
 --- !u!65 &9022657493892090085
 BoxCollider:
   m_ObjectHideFlags: 0

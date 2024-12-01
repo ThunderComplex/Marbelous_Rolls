@@ -15,9 +15,10 @@ public class Cooldowns : MonoBehaviour
     {
         cooldownIcon.color = Color.green;
         cooldownCharges.text = charges.ToString();
+        cooldownTimeIcon.fillAmount = 0;
     }
 
-    public IEnumerator Cooldown(float cooldownTime, bool abilitybool)
+    public IEnumerator Cooldown(float cooldownTime, int abilityNumber)
     {
         time = cooldownTime;
         cooldownIcon.color = Color.red;
@@ -30,6 +31,8 @@ public class Cooldowns : MonoBehaviour
         }
 
         cooldownIcon.color = Color.green;
-        abilitybool = true;
+
+        //if (abilityNumber == (int)PowerupType.SpeedBoost) PlayerController.instance.
+        //else if (abilityNumber == 1) return;
     }
 }

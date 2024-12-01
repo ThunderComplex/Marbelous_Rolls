@@ -12,6 +12,8 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] private GameObject countdownObj;
     public GameObject timerObj;
+    [SerializeField] private GameObject abilityGain;
+    [SerializeField] private TextMeshProUGUI abilityGainText;
 
     [SerializeField] private Cooldowns boostCooldown;
     [SerializeField] private Cooldowns gravityCooldown;
@@ -63,6 +65,22 @@ public class PlayerUI : MonoBehaviour
         return timerObj.GetComponent<Timer>().time;
     }
 
+    public void GainAbility(PowerupType abilitiy)
+    {
+        StopCoroutine(AbilityGainDisable());
+
+        abilityGainText.text = "New Ability: ";
+        if (abilitiy == PowerupType.SpeedBoost) abilityGainText.text += "Speed Boost";
+
+        StartCoroutine(AbilityGainDisable());
+
+    }
+    private IEnumerator AbilityGainDisable()
+    {
+        abilityGain.SetActive(true);
+        yield return new WaitForSeconds(1);
+        abilityGain.SetActive(false);
+    }
     public void ActivateCooldownIcon(int charges, Cooldown _cooldown)
     {
         cooldown = _cooldown;
@@ -83,21 +101,21 @@ public class PlayerUI : MonoBehaviour
         cd.SetCooldown(charges);
     }
 
-    public void StartCooldown(float cooldownTime, bool cdBool, int charges)
+    public void StartCooldown(float cooldownTime, int abilityNumber, int charges)
     {
         switch (cooldown)
         {
             case Cooldown.boostCD:
-                StartCD(boostCooldown, cooldownTime, cdBool, charges);
+                StartCD(boostCooldown, cooldownTime, abilityNumber, charges);
                 break;
             case Cooldown.gravityCD:
-                StartCD(gravityCooldown, cooldownTime, cdBool, charges);
+                StartCD(gravityCooldown, cooldownTime, abilityNumber, charges);
                 break;
         }
     }
-    private void StartCD(Cooldowns cd, float cooldownTime, bool cdBool, int charges)
+    private void StartCD(Cooldowns cd, float cooldownTime, int abilityNumber, int charges)
     {
         if (charges <= 0) cd.gameObject.SetActive(false);
-        else StartCoroutine(cd.Cooldown(cooldownTime, cdBool));
+        else StartCoroutine(cd.Cooldown(cooldownTime, abilityNumber));
     }
 }
