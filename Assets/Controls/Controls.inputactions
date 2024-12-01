@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "Boost",
                     "type": "Button",
                     "id": "2937b962-4115-4160-aa2e-de4cd2b8ae43",
                     "expectedControlType": "",
@@ -130,18 +130,18 @@
                 {
                     "name": "",
                     "id": "e2d47435-6fbb-4314-b85d-8cbb5885d069",
-                    "path": "<Keyboard>/f",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "Boost",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "9825057c-9866-4bd6-999d-3a6bd426b8e2",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -152,7 +152,7 @@
                 {
                     "name": "",
                     "id": "52015ac6-6e2c-47aa-ab1d-95b8e4df164c",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
