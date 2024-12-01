@@ -2,13 +2,27 @@ using UnityEngine;
 
 public class SwitchObject : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private bool activ;
+
+    //[SerializeField] private Collider collider = new Collider();
+
+    private Color activColor;
+    private Color DisableColor;
+    void Awake()
     {
-        
+        //activColor = 
     }
+
     public void ChangeColorState()
     {
+        if (activ)
+        {
 
+        }
+        else
+        {
+
+        }
+        activ = !activ;
     }
 }
