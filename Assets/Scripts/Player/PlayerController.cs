@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,10 +17,12 @@ public class PlayerController : MonoBehaviour
     private bool performJump;
     private bool isGrounded;
     private PowerupType? currentPowerup = null;
-    private bool canDoubleJump = false;
+    private int currentPowerupAmount = 0;
     private bool canSpeedBoost = false;
     private Vector3 steeringVector = Vector3.zero;
     private CinemachineOrbitalFollow orbitalFollow;
+    private bool didDoubleJump = false;
+    private Coroutine powerUpCoroutine;
 
     void Awake()
     {
@@ -73,31 +76,47 @@ public class PlayerController : MonoBehaviour
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
 
-        if (isGrounded && controls.Player.Jump.WasPerformedThisFrame())
+        if (isGrounded)
+        {
+            didDoubleJump = false;
+        }
+
+        if (controls.Player.Jump.WasPerformedThisFrame())
         {
             performJump = true;
         }
 
         if (currentPowerup != null && controls.Player.Switch.WasPerformedThisFrame())
         {
-            ExecutePowerUp();
+            if (powerUpCoroutine == null)
+            {
+                powerUpCoroutine = StartCoroutine(ExecutePowerUp());
+            }
         }
 
     }
 
-    void ExecutePowerUp()
+    IEnumerator ExecutePowerUp()
     {
-        switch (currentPowerup)
+        if (currentPowerupAmount > 0)
         {
-            case PowerupType.DoubleJump:
-                canDoubleJump = true;
-                break;
-            case PowerupType.SpeedBoost:
-                canSpeedBoost = true;
-                break;
+            switch (currentPowerup)
+            {
+                case PowerupType.SpeedBoost:
+                    canSpeedBoost = true;
+                    break;
+            }
+
+            currentPowerupAmount--;
         }
 
-        currentPowerup = null;
+        if (currentPowerupAmount == 0)
+        {
+            currentPowerup = null;
+        }
+
+        yield return new WaitForSeconds(0.6f);
+        powerUpCoroutine = null;
     }
 
     void FixedUpdate()
@@ -124,22 +143,24 @@ public class PlayerController : MonoBehaviour
             _rigidbody.AddForce(_rigidbody.linearVelocity * -1.5f, ForceMode.Acceleration);
         }
 
-        if (performJump && isGrounded)
+        if (performJump)
         {
-            _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            if (isGrounded || !didDoubleJump)
+            {
+                _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
             performJump = false;
             isGrounded = false;
-        }
 
-        if (canDoubleJump)
-        {
-            _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            canDoubleJump = false;
+            if (!didDoubleJump)
+            {
+                didDoubleJump = true;
+            }
         }
 
         if (canSpeedBoost)
         {
-            _rigidbody.AddForce(speed * 0.5f, ForceMode.Impulse);
+            _rigidbody.AddForce(speed * 1.5f, ForceMode.Impulse);
             canSpeedBoost = false;
         }
 
@@ -150,8 +171,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void GivePowerUp(PowerupType powerupType)
+    public void GivePowerUp(PowerupType powerupType, int amount)
     {
         currentPowerup = powerupType;
+        currentPowerupAmount = amount;
     }
 }

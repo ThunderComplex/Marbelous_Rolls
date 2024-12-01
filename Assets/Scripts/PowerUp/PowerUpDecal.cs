@@ -13,9 +13,6 @@ public class PowerUpDecal : MonoBehaviour
 
         switch (powerupType)
         {
-            case PowerupType.DoubleJump:
-                crenderer.material = doubleJumpMaterial;
-                break;
             case PowerupType.SpeedBoost:
                 crenderer.material = speedBoostMaterial;
                 break;
