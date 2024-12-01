@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,7 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     public float rotationSpeed;
     public float jumpForce;
+    public float cameraSpeed;
     public Camera playerCamera;
+    public CinemachineCamera cinemaCamera;
     private Rigidbody _rigidbody;
     private Vector3 speed;
     private Controls controls;
@@ -14,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private PowerupType? currentPowerup = null;
     private bool canDoubleJump = false;
     private bool canSpeedBoost = false;
+    private Vector3 steeringVector = Vector3.zero;
+    private CinemachineOrbitalFollow orbitalFollow;
 
     void Awake()
     {
@@ -26,6 +31,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = debugPlayerStart.transform.position;
         }
+
     }
 
     void OnEnable()
@@ -41,17 +47,20 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         TryGetComponent(out _rigidbody);
+        cinemaCamera.TryGetComponent(out orbitalFollow);
     }
 
     void Update()
     {
         var move = controls.Player.Move.ReadValue<Vector2>();
-        var move3d = new Vector3(move.x * 2.5f, 0, move.y);
+        var move3d = new Vector3(0, 0, move.y);
         var moveAngles = playerCamera.transform.rotation.eulerAngles;
         // Ignore vertical camera rotation
         moveAngles.x = 0f;
-        var q = Quaternion.Euler(moveAngles);
+        steeringVector.y += move.x * 5;
+        var q = Quaternion.Euler(steeringVector);
         speed = q * move3d * rotationSpeed;
+        // Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
 
@@ -84,11 +93,27 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        var timesteppedSpeed = speed * Time.fixedDeltaTime;
-        _rigidbody.AddTorque(
-            new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -1),
-            ForceMode.Acceleration
+        orbitalFollow.HorizontalAxis.Value = Mathf.Lerp(
+            orbitalFollow.HorizontalAxis.Value,
+            steeringVector.y,
+            Time.fixedDeltaTime * cameraSpeed
         );
+        orbitalFollow.VerticalAxis.Value = 25;
+
+        var timesteppedSpeed = speed * Time.fixedDeltaTime;
+        // _rigidbody.AddTorque(
+        //     new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -1),
+        //     ForceMode.Acceleration
+        // );
+        _rigidbody.AddForce(timesteppedSpeed, ForceMode.Acceleration);
+
+        var cameraDiff = Mathf.Abs(
+            Vector3.Dot(_rigidbody.linearVelocity.normalized, playerCamera.transform.forward.normalized)
+        );
+        if (cameraDiff < 0.8 && speed.magnitude < 0.1f)
+        {
+            _rigidbody.AddForce(_rigidbody.linearVelocity * -1.5f, ForceMode.Acceleration);
+        }
 
         if (performJump && isGrounded)
         {
