@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 7714032713682617914}
   - component: {fileID: 2303674007700025617}
   - component: {fileID: 9022657493892090085}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PowerupGate
   m_TagString: Untagged
   m_Icon: {fileID: 0}

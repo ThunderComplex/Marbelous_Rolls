@@ -16,7 +16,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 speed;
     private Controls controls;
     private bool performJump;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
+    private bool startSwitchGroundState;
+    [SerializeField] private LayerMask groundCheckLayer;
     //private PowerupType? currentPowerup = null;
     //private int currentPowerupAmount = 0;
     private bool canSpeedBoost = false;
@@ -78,7 +80,21 @@ public class PlayerController : MonoBehaviour
         speed = q * move3d * rotationSpeed;
         // Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
 
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, 2f);  //1.1f
+        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundCheckLayer))
+        {
+            startSwitchGroundState = true;
+            isGrounded = true;
+        }
+        else
+        {
+            if(startSwitchGroundState == true)
+            {
+                StopCoroutine(SwitchGroundState());
+                startSwitchGroundState = false;
+                StartCoroutine(SwitchGroundState());
+            }
+        }
+        //isGrounded = Physics.Raycast(transform.position, Vector3.down, 2f, groundCheckLayer);  //1.1f
 
         if (isGrounded)
         {
@@ -96,6 +112,7 @@ public class PlayerController : MonoBehaviour
             powerUpCooldowns[0] = true;
             canSpeedBoost = true;
             PlayerUI.Instance.StartCooldown(1, 0, boostCharges);
+            StartCoroutine(EndSpeedBoost());
         }
         //if (currentPowerup != null && controls.Player.Boost.WasPerformedThisFrame())
         //{
@@ -105,6 +122,16 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
 
+    }
+    private IEnumerator EndSpeedBoost()
+    {
+        yield return new WaitForSeconds(0.8f);
+        canSpeedBoost = false;
+    }
+    private IEnumerator SwitchGroundState()
+    {
+        yield return new WaitForSeconds(0.03f);
+        isGrounded = false;
     }
 
     //IEnumerator ExecutePowerUp()
@@ -144,7 +171,20 @@ public class PlayerController : MonoBehaviour
         //     new Vector3(timesteppedSpeed.z, 0, timesteppedSpeed.x * -1),
         //     ForceMode.Acceleration
         // );
-        _rigidbody.AddForce(timesteppedSpeed, ForceMode.Acceleration);
+        if (canSpeedBoost)
+        {
+            //_rigidbody.AddForce(transform.forward * speedBoostAmount, ForceMode.Impulse);
+            _rigidbody.AddForce(timesteppedSpeed * 3, ForceMode.Acceleration);
+
+            //_rigidbody.AddForce(speed * 1.5f, ForceMode.Impulse);
+            //canSpeedBoost = false;
+        }
+        else
+        {
+            _rigidbody.AddForce(timesteppedSpeed, ForceMode.Acceleration);
+        }
+
+       
 
         var cameraDiff = Mathf.Abs(
             Vector3.Dot(_rigidbody.linearVelocity.normalized, playerCamera.transform.forward.normalized)
@@ -156,24 +196,25 @@ public class PlayerController : MonoBehaviour
 
         if (performJump)
         {
-            if (isGrounded || !didDoubleJump)
+            if (isGrounded) // || !didDoubleJump)
             {
                 _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+            else if (!didDoubleJump)
+            {
+                _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                didDoubleJump = true;
             }
             performJump = false;
             isGrounded = false;
 
-            if (!didDoubleJump)
-            {
-                didDoubleJump = true;
-            }
         }
 
-        if (canSpeedBoost)
-        {
-            _rigidbody.AddForce(speed * 1.5f, ForceMode.Impulse);
-            canSpeedBoost = false;
-        }
+        //if (canSpeedBoost)
+        //{
+        //    _rigidbody.AddForce(speed * 1.5f, ForceMode.Impulse);
+        //    canSpeedBoost = false;
+        //}
 
         // Air control
         if (!isGrounded)

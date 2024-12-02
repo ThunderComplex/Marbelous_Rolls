@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2580284621277716642}
   - component: {fileID: 3893891296321232406}
   - component: {fileID: 917354758634918927}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerBall
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -154,3 +154,6 @@ MonoBehaviour:
   cameraSpeed: 4
   playerCamera: {fileID: 0}
   cinemaCamera: {fileID: 0}
+  groundCheckLayer:
+    serializedVersion: 2
+    m_Bits: 1
