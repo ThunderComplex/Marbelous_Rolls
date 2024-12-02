@@ -9,6 +9,8 @@ public class LevelComplete : MonoBehaviour
             other.gameObject.SetActive(false);
             float finalTime = PlayerUI.Instance.GetFinalTime();
             MenuController.Instance.OnLevelComplete(finalTime);
+
+            AudioController.Instance.StopRollSound();
         }
     }
 }

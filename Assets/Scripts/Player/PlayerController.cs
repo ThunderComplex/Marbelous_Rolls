@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         speed = q * move3d * rotationSpeed;
         // Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
 
-        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundCheckLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundCheckLayer, QueryTriggerInteraction.Ignore))
         {
             startSwitchGroundState = true;
             isGrounded = true;
@@ -124,6 +124,20 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
 
+        //Debug.Log(_rigidbody.linearVelocity.magnitude);
+        if(_rigidbody.linearVelocity.magnitude > 2 && isGrounded)
+        {
+            AudioController.Instance.StartRollSound();
+
+            if (MenuController.Instance.gameIsPaused == true)
+            {
+                AudioController.Instance.StopRollSound();
+            }
+        }
+        else
+        {
+            AudioController.Instance.StopRollSound();
+        }
     }
     private IEnumerator EndSpeedBoost()
     {
@@ -201,11 +215,15 @@ public class PlayerController : MonoBehaviour
             if (isGrounded) // || !didDoubleJump)
             {
                 _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+                AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.jump);
             }
             else if (!didDoubleJump)
             {
                 _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 didDoubleJump = true;
+
+                AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.doubleJump);
             }
             performJump = false;
             isGrounded = false;

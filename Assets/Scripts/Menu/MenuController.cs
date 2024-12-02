@@ -79,6 +79,8 @@ public class MenuController : MonoBehaviour
                     Cursor.visible = true;
                     PauseGame();
                     IngameMenu.SetActive(true);
+
+                    AudioController.Instance.StopRollSound();
                 }
                 else CloseSelectedMenu(IngameMenu);
             }

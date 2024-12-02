@@ -8,6 +8,7 @@ public class AudioController : MonoBehaviour
 
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource soundSource;
+    [SerializeField] private AudioSource rollSource;
 
     [SerializeField] private AudioMixer audiomixer;
     [SerializeField] private string masterVolume;
@@ -31,6 +32,7 @@ public class AudioController : MonoBehaviour
         boost,
         go,
         jump,
+        doubleJump,
         colorSwitch,
 
     }
@@ -91,6 +93,17 @@ public class AudioController : MonoBehaviour
         musicSource.volume = musicClips[songNumber].volume;
         musicSource.clip = musicClips[songNumber].clip;
         musicSource.Play();
+    }
+
+    public void StartRollSound()
+    {
+        if (rollSource.isPlaying) return;
+
+        rollSource.Play();
+    }
+    public void StopRollSound()
+    {
+        rollSource.Stop();
     }
 
     [Serializable]
