@@ -14,9 +14,15 @@ public class AudioController : MonoBehaviour
     [SerializeField] private string musicVolume;
     [SerializeField] private string soundVolume;
 
-    //[SerializeField] private AudioClip[] musicClips;
+    [SerializeField] private IngameMusic[] musicClips;
     [SerializeField] private IngameSounds[] soundClips;
 
+    public enum Songs
+    {
+        empty,
+        menuSong,
+        inGameSong,
+    }
     public enum Sounds
     {
         empty,
@@ -78,8 +84,21 @@ public class AudioController : MonoBehaviour
         soundSource.PlayOneShot(soundClips[soundNumber].clip, soundClips[soundNumber].volume);
     }
 
+    public void SetSong(int songNumber)
+    {
+        if (musicSource.clip == musicClips[songNumber].clip) return;
 
+        musicSource.volume = musicClips[songNumber].volume;
+        musicSource.clip = musicClips[songNumber].clip;
+        musicSource.Play();
+    }
 
+    [Serializable]
+    public struct IngameMusic
+    {
+        public AudioClip clip;
+        public float volume;
+    }
     [Serializable]
     public struct IngameSounds
     {

@@ -39,6 +39,18 @@ public class MenuController : MonoBehaviour
     {
         controls = Keybindinputmanager.inputActions;
         controls.Enable();
+
+        if(AudioController.Instance != null)
+        {
+            if (SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                AudioController.Instance.SetSong((int)AudioController.Songs.menuSong);
+            }
+            else
+            {
+                AudioController.Instance.SetSong((int)AudioController.Songs.inGameSong);
+            }
+        }
     }
 
     void Update()
