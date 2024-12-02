@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Level/Level2.unity
     guid: 5cb56c09f69220740be045a96fe914da
   - enabled: 1
-    path: Assets/Scenes/MarvinTest.unity
-    guid: c57871c5cec193442b366db13a270b43
+    path: Assets/Scenes/Level/Level3.unity
+    guid: ad17c589ba19d4348a828822b3829e74
   - enabled: 1
     path: Assets/Scenes/Level/Level4.unity
     guid: 776a8484cc44a4343ae24e6c71c2b8a8
