@@ -102,7 +102,7 @@ public class AudioController : MonoBehaviour
     }
     public void StopRollSound()
     {
-        rollSource.Stop();
+        rollSource.Pause();
     }
 
     [Serializable]
