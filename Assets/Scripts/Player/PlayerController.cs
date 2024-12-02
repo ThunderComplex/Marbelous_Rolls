@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
             performJump = true;
         }
 
-        if (currentPowerup != null && controls.Player.Switch.WasPerformedThisFrame())
+        if (currentPowerup != null && controls.Player.Boost.WasPerformedThisFrame())
         {
             if (powerUpCoroutine == null)
             {
