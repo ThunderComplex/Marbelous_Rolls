@@ -55,10 +55,14 @@ MonoBehaviour:
   soundClips:
   - clip: {fileID: 0}
     volume: 0
-  - clip: {fileID: 8300000, guid: 656ca1eb47987de4d9af65569fe31cb3, type: 3}
-    volume: 0.7
+  - clip: {fileID: 8300000, guid: 57e18c8cdf012f54b82d0cbc6e147d83, type: 3}
+    volume: 0.4
   - clip: {fileID: 8300000, guid: 81eb54cf8b5400c4bbcfac9ec3b4d2e3, type: 3}
     volume: 0.15
+  - clip: {fileID: 8300000, guid: d9925dac5c41c144b86e7f24083489a2, type: 3}
+    volume: 0.2
+  - clip: {fileID: 8300000, guid: 6689b0a3f62245d46acad52fada3395e, type: 3}
+    volume: 0.05
 --- !u!1 &7028555488648105598
 GameObject:
   m_ObjectHideFlags: 0

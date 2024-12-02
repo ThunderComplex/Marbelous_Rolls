@@ -113,6 +113,8 @@ public class PlayerController : MonoBehaviour
             canSpeedBoost = true;
             PlayerUI.Instance.StartCooldown(1, 0, boostCharges);
             StartCoroutine(EndSpeedBoost());
+
+            AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.boost);
         }
         //if (currentPowerup != null && controls.Player.Boost.WasPerformedThisFrame())
         //{
