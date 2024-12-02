@@ -32,6 +32,7 @@ public class SwitchController : MonoBehaviour
             {
                 obj.ChangeColorState();
             }
+            AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton2);
         }
     }
 }
