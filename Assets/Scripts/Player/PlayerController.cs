@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         speed = q * move3d * rotationSpeed;
         // Debug.DrawRay(transform.position, speed, Color.red, 0.1f, false);
 
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 2f);  //1.1f
 
         if (isGrounded)
         {
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
             steeringVector.y,
             Time.fixedDeltaTime * cameraSpeed
         );
-        orbitalFollow.VerticalAxis.Value = 25;
+        orbitalFollow.VerticalAxis.Value = 28; //25;
 
         var timesteppedSpeed = speed * Time.fixedDeltaTime;
         // _rigidbody.AddTorque(
