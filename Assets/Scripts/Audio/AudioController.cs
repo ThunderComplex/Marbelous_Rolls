@@ -22,6 +22,8 @@ public class AudioController : MonoBehaviour
         empty,
         menuButton,
         levelFail,
+        boost,
+        go,
         jump,
         colorSwitch,
 

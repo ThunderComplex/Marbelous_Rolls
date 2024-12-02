@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Countdown : MonoBehaviour
 {
-    private float countdownSpeed = 0.6f;
+    private float countdownSpeed = 0.7f;
 
     [SerializeField] private TextMeshProUGUI countdownText;
     private void OnEnable()
@@ -13,6 +13,7 @@ public class Countdown : MonoBehaviour
     }
     private IEnumerator CountdownStart()
     {
+        AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.go);
         int remainingTime = 4;
         while (remainingTime > 1)
         {
