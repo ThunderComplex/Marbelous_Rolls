@@ -3,6 +3,7 @@ using TMPro;
 using LootLocker.Requests;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ResultScreen : MonoBehaviour
 {
@@ -114,7 +115,10 @@ public class ResultScreen : MonoBehaviour
     {
         if (inputField.text == string.Empty)
         {
+            inputField.GetComponent<Image>().color = Color.red;
             Debug.Log("inputField is empty");
+
+            AudioController.Instance.PlaySoundOneshot((int)AudioController.Sounds.menuButton2);
             return;
         }
 
@@ -137,5 +141,9 @@ public class ResultScreen : MonoBehaviour
 
             StartCoroutine(IngameLeaderboardUpdate());
         }
+    }
+    public void InputfieldReset()
+    {
+        inputField.GetComponent<Image>().color = Color.white;
     }
 }
