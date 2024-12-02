@@ -33,8 +33,7 @@ public class AudioController : MonoBehaviour
         go,
         jump,
         doubleJump,
-        colorSwitch,
-
+        menuButton2,
     }
 
     private void Awake()
