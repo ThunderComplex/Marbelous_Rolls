@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2126570208614622536}
   - component: {fileID: 2786670252458588800}
   - component: {fileID: 159248317592890347}
-  - component: {fileID: 1060102401595093992}
   m_Layer: 5
   m_Name: GainAbilityObj
   m_TagString: Untagged
@@ -103,19 +102,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1060102401595093992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758227809111342475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e09f8249d217f5f43bf18a4da0285fa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 0
 --- !u!1 &952834561876669418
 GameObject:
   m_ObjectHideFlags: 0

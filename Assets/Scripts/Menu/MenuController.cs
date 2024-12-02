@@ -25,7 +25,6 @@ public class MenuController : MonoBehaviour
         }
         else Destroy(gameObject);
 
-        controls = Keybindinputmanager.inputActions;
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             MainMenu.SetActive(true);
@@ -35,17 +34,11 @@ public class MenuController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
-
     }
-    private void OnEnable()
+    private void Start()
     {
+        controls = Keybindinputmanager.inputActions;
         controls.Enable();
-    }
-    public void ControlsDisable()
-    {
-        controls.Disable();
-        controls.Dispose();
     }
 
     void Update()

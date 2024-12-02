@@ -115,7 +115,11 @@ public class PlayerUI : MonoBehaviour
     }
     private void StartCD(Cooldowns cd, float cooldownTime, int abilityNumber, int charges)
     {
-        if (charges <= 0) cd.gameObject.SetActive(false);
-        else StartCoroutine(cd.Cooldown(cooldownTime, abilityNumber));
+        if (charges <= 0)
+        {
+            PlayerController.instance.powerUpCooldowns[abilityNumber] = false;
+            cd.gameObject.SetActive(false); 
+        }
+        else StartCoroutine(cd.Cooldown(cooldownTime, abilityNumber, charges));
     }
 }

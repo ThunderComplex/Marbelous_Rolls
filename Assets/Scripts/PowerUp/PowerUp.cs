@@ -11,6 +11,7 @@ public class PowerUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().GivePowerUp(powerupType, amount);
+            PlayerUI.Instance.GainAbility(powerupType);
         }
     }
 }
