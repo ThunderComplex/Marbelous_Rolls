@@ -75,8 +75,7 @@ public class AudioController : MonoBehaviour
 
     public void PlaySoundOneshot(int soundNumber)
     {
-        soundSource.volume = soundClips[soundNumber].volume;
-        soundSource.PlayOneShot(soundClips[soundNumber].clip);
+        soundSource.PlayOneShot(soundClips[soundNumber].clip, soundClips[soundNumber].volume);
     }
 
 

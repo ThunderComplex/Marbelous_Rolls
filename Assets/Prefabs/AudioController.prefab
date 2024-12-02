@@ -56,13 +56,13 @@ MonoBehaviour:
   - clip: {fileID: 0}
     volume: 0
   - clip: {fileID: 8300000, guid: 57e18c8cdf012f54b82d0cbc6e147d83, type: 3}
-    volume: 0.4
+    volume: 0.3
   - clip: {fileID: 8300000, guid: 81eb54cf8b5400c4bbcfac9ec3b4d2e3, type: 3}
     volume: 0.15
-  - clip: {fileID: 8300000, guid: d9925dac5c41c144b86e7f24083489a2, type: 3}
+  - clip: {fileID: 8300000, guid: 7a5e43f65a2bb61459375174bb0d659d, type: 3}
     volume: 0.2
   - clip: {fileID: 8300000, guid: 6689b0a3f62245d46acad52fada3395e, type: 3}
-    volume: 0.05
+    volume: 0.1
 --- !u!1 &7028555488648105598
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -237,7 +237,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
